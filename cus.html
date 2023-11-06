@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* CSS for the custom alert dialog */
+        .custom-alert {
+            background: green;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="showCustomAlert()">Show Custom Alert</button>
+
+    <div id="custom-alert" class="custom-alert">
+        <h3>Custom Alert</h3>
+        <p>This is a custom alert message.</p>
+        <button onclick="hideCustomAlert()">OK</button>
+    </div>
+
+    <script>
+        // JavaScript functions to show and hide the custom alert
+        function showCustomAlert() {
+            document.getElementById("custom-alert").style.display = "block";
+        }
+
+        function hideCustomAlert() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <script src="https://kit.fontawesome.com/5f80576e58.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<style>
+   .ok {
+      height: 50px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid black;
+      width: 60%;
+   }
+
+   .okk {
+      height: 50px;
+      padding: 10px;
+      background-color: #f68b1e;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-weight: 500;
+      width: 60%;
+
+   }
+
+   .okky {
+      height: 50px;
+      padding: 10px;
+      background-color: #1877f2;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-weight: 500;
+      width: 60%;
+   }
+
+   .ttt {
+      display: block;
+      justify-content: center;
+      align-items: center;
+      width: 40%;
+      margin: auto;
+      text-align: center;
+
+   }
+
+   /* input{
+      border-color: #f68b1e;
+      outline: #f68b1e;
+      width: 70%;
+      margin: auto;
+      padding: 10px;
+      margin-bottom: 10px;
+
+   } */
+   .cc {
+      display: flex;
+      border: 1px solid black;
+      width: 60%;
+      margin: auto;
+      border-radius: 6px;
+      padding: 10px;
+      height: 50px;
+      white-space: nowrap;
+   }
+
+   .cx {
+      border: 0;
+      background: none;
+   }
+
+   .bb {
+      width: 400px;
+      height: 40px;
+      outline: none;
+      background: none;
+      border: 0;
+
+   }
+</style>
+
+<body>
+   <div class="ttt"><br><br>
+      <img src="jumia-removebg-preview.png" alt="" width="100" height="100"><br><br>
+      <h4>Welcome to Jumia</h4>
+      <p>Type your e-mail or phone number to log in or create a Jumia <br> account.</p>
+      <input id="email" class="ok" type="text" placeholder="Email or Mobile number"> <br><br>
+      <div class="cc"> <input id="password" class="bb " type="password" placeholder="**********"> <button id="but"
+            onclick="eye()" class="cx" type="button"><i class="fa-solid fa-eye-slash"></i></button> </div><br>
+      <div class="cc"> <input id="cont" class="bb " type="password" placeholder="confirm password"> <button id="bat"
+            onclick="show()" class="cx" type="button"><i class="fa-solid fa-eye-slash"></i></button> </div><br>
+      <button onclick="reg()" class=" okk">Register</button><br><br>
+      <!-- <p>Don't have an Account? <a href="login.html">sign up</a></p> -->
+      <!-- <button class=" okky"><i class="fa-brands fa-facebook"></i>    Log in with Facebook</button>  <br><br> -->
+      <p>For further support, you may visit the Help Center or contact our <br> customer service team.</p> <br>
+
+      <img src="jumai logo.png" alt="" width="120" height="25">
+
+   </div>
+
+</body>
+<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>
+<script>
+   let but = document.getElementById("but")
+   let bat = document.getElementById("bat")
+
+   // const alluser = JSON.parse.localstorage.setItem("myuser")
+
+
+
+
+
+   function eye() {
+      if (password.type == "password") {
+         password.type = "text"
+         but.innerHTML = `<i class="fa-solid fa-eye"></i>`
+      } else {
+         password.type = "password";
+         but.innerHTML = ` <i class="fa-solid fa-eye-slash"></i>`
+      }
+   }
+
+   function show() {
+      if (cont.type === "password") {
+         cont.type = "text"
+         bat.innerHTML = `<i class="fa-solid fa-eye"></i>`
+      } else {
+         cont.type = "password"
+         bat.innerHTML = `<i class="fa-solid fa-eye-slash"></i>`
+      }
+   }
+
+   function reg() {
+      let email = document.getElementById("email").value
+      let password = document.getElementById("password").value
+      let cont = document.getElementById("cont").value
+      if (email == "" || password == "" || cont == "") {
+         alert("fields cannot be empty")
+         return;
+      }
+
+      if (password !== cont) {
+         alert("password doesn't match")
+         return;
+      }
+      let alluser = {
+         email,
+         password,
+         cont
+      }
+
+      let Users = JSON.parse(localStorage.getItem("Users")) || [];
+
+      // let existiUsers = Users.find(u => u.email === email)
+
+      Users.push(alluser);
+
+      localStorage.setItem('Users', JSON.stringify(Users));
+      window.location.href = "login.html"
+   }
+
+
+
+
+</script>

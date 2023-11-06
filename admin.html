@@ -1,0 +1,236 @@
+<<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .dem {
+            width: 500px;
+            height: 50px;
+            outline: none;
+        }
+
+        .bet {
+            background-color: #f68b1e;
+            color: white;
+            border-radius: 8px;
+            width: 200px;
+            height: 50px;
+            border: 0;
+        }
+
+        body {
+            background-color: #b077d8;
+        }
+
+        .bet:hover {
+            background-color: #14647e;
+        }
+        #vv{
+            width: 100px;
+            height: 40px;
+            background-color: #0030a7;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+        }
+        #v{
+            width: 100px;
+            height: 40px;
+            background-color: #e61601;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+        }
+        #v:hover{
+            background-color: #1b0907;
+            color: rgb(174, 174, 174);
+            transform: rotate(360deg);
+            transition: all 1s linear;
+        }
+        #vv:hover{
+            background-color: #722090;
+            color: rgb(174, 174, 174);
+            transform: translateY(-5px);
+            transition: all 1s linear;
+        }
+        .brt{
+            margin-left: 40px;
+            background-color: #0030a7;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>WELCOME TO ADMIN PAGE</h1>
+    <div>
+        <input id="img" type="file">
+        <br><br>
+        <input class="dem" type="text" id="product" placeholder="PRODUCT NAME">
+        <br><br>
+        <input class="dem" type="text" id="price" placeholder="PRICE">
+        <br><br>
+        <input class="dem" type="text" id="cat" placeholder="CATEGORIES">
+        <br><br>
+        <input class="dem" type="text" id="des" placeholder="DESCRIPTION">
+        <br><br>
+        <button onclick="add(event)" class="bet">ADD PRODUCT</button>
+        <button onclick="cd()" class="bet brt">Back To Home Page</button>
+    </div>
+    <div id="productlist"></div>
+
+</body>
+
+<script>
+    let img = document.getElementById("img");
+    let productlist = document.getElementById("productlist");
+
+    img.addEventListener("change", pickimg);
+
+    function pickimg(ev) {
+        let file = ev.target.files[0];
+        let reader = new FileReader();
+
+        reader.addEventListener("load", (e) => {
+            img.src = e.target.result;
+        });
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    let name = document.getElementById("product");
+    let price = document.getElementById("price");
+    let cat = document.getElementById("cat");
+    let des = document.getElementById("des");
+
+    function add(ev) {
+        if (!img.files[0] || !name.value || !price.value || !cat.value || !des.value) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        fetch("http://localhost:3000/products", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                thumbnail: img.src,
+                title: name.value,
+                price: price.value,
+                description: des.value,
+                category: cat.value
+            })
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            alert("Product added successfully.");
+            fetchUsers();
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("An error occurred while adding the product.");
+        });
+        beat.reset()
+    }
+
+    function fetchUsers() {
+        productlist.innerHTML = '';
+        fetch("http://localhost:3000/products")
+        .then((res) => res.json())
+        .then((data) => {
+            products = data;
+            console.log(products);
+
+            products.forEach((product, index) => {
+                const productElement = document.createElement('div');
+                productElement.innerHTML += `
+                    <div class="container-sm new" style="background: #14647e;  margin: 10px;">
+                        <img src="${product.thumbnail}" width=200px>
+                        <h2>${product.title}</h2>
+                        <p>Price: &#8358; ${product.price}</p>
+                        <p>Description: ${product.description}</p>
+                        <p>Category: ${product.category}</p>
+                        <button id="vv" onclick="editProduct(${index})">Edit</button>
+                        <button id="v" onclick="deleteProduct(${product.id})">Delete</button>
+                    </div>
+                `;
+                productlist.appendChild(productElement);
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            // alert("An error occurred while fetching products.");
+        });
+    }
+
+    fetchUsers();
+
+
+    function editProduct(index) {
+    const productToEdit = products[index];
+    
+    // Use the prompt method to get the updated product details from the user
+    const updatedTitle = prompt("Edit Product Name:", productToEdit.title);
+    const updatedPrice = prompt("Edit Price:", productToEdit.price);
+    // Prompt for other product details as needed
+
+    // If the user cancels the prompt, updatedTitle and updatedPrice will be null
+    if (updatedTitle === null || updatedPrice === null) {
+        return;
+    }
+
+    // Update the product object with the new values
+    productToEdit.title = updatedTitle;
+    productToEdit.price = updatedPrice;
+    // Update other product details as well
+
+    // Send a PUT request to update the product on the server
+    fetch(`http://localhost:3000/products/${productToEdit.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(productToEdit)
+    })
+    .then((res) => res.json())
+    .then(() => {
+        alert("Product updated successfully.");
+        fetchUsers(); // Refresh the product list after updating.
+    })
+    .catch((err) => {
+        console.log(err);
+        alert("An error occurred while updating the product.");
+    });
+}
+
+
+function deleteProduct(productId) {
+    const confirmDelete = confirm("Are you sure you want to delete this product?");
+    if (confirmDelete) {
+        fetch(`http://localhost:3000/products/${productId}`, {
+            method: "DELETE"
+        })
+        .then((res) => res.json())
+        .then(() => {
+            alert("Product deleted successfully.");
+            fetchUsers(); // Refresh the product list after deletion.
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("An error occurred while deleting the product.");
+        });
+    }
+}
+
+    function cd(){
+        window.location.href =  'index.html'
+    }
+</script>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <script src="https://kit.fontawesome.com/5f80576e58.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<style>
+   .ok {
+      height: 50px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid black;
+      width: 60%;
+   }
+
+   .okk {
+      height: 50px;
+      padding: 10px;
+      background-color: #f68b1e;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-weight: 500;
+      width: 60%;
+
+   }
+
+   .okky {
+      height: 50px;
+      padding: 10px;
+      background-color: #1877f2;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-weight: 500;
+      width: 60%;
+   }
+
+   .ttt {
+      display: block;
+      justify-content: center;
+      align-items: center;
+      width: 40%;
+      margin: auto;
+      text-align: center;
+
+   }
+
+   /* input{
+      border-color: #f68b1e;
+      outline: #f68b1e;
+      width: 70%;
+      margin: auto;
+      padding: 10px;
+      margin-bottom: 10px;
+
+   } */
+   .cc {
+      display: flex;
+      border: 1px solid black;
+      width: 60%;
+      margin: auto;
+      border-radius: 6px;
+      padding: 10px;
+      height: 50px;
+      white-space: nowrap;
+   }
+
+   .cx {
+      border: 0;
+      background: none;
+   }
+
+   .bb {
+      width: 400px;
+      height: 40px;
+      outline: none;
+      background: none;
+      border: 0;
+
+   }
+   .custom-alert {
+      display: none;
+            background:#6dbd28;
+            border: 1px solid #6dbd28;
+            /* padding: px; */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<body>
+   <div id="custom-alert" class="custom-alert">
+      <p>logIn successFully</p>
+  </div>
+
+   <div class="ttt"><br><br>
+      <img src="jumia-removebg-preview.png" alt="" width="100" height="100"><br><br>
+      <h4>Welcome to Jumia</h4>
+      <p>Type your e-mail or phone number to log in or create a Jumia <br> account.</p>
+      <input id="email" class="ok" type="text" placeholder="Email or Mobile number"> <br><br>
+      <div class="cc"> <input id="password" class="bb " type="password" placeholder="**********"> <button
+            onclick="toggle()" id="rat" class="cx" type="button"><i class="fa-solid fa-eye-slash"></i></button> </div><br>
+      <button onclick="login(event)" class=" okk">Continue</button><br><br>
+      <p>Don't have an Account? <a href="signup.html">sign up</a></p>
+      <button class=" okky"><i class="fa-brands fa-facebook"></i> Log in with Facebook</button> <br><br>
+      <p>For further support, you may visit the Help Center or contact our <br> customer service team.</p> <br>
+
+      <img src="jumai logo.png" alt="" width="120" height="25">
+
+   </div>
+   
+
+
+
+
+</body>
+<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>
+<script>
+
+
+   //   let alluser = JSON.parse.localstorage.setItem("myuser")
+
+
+   function toggle() {
+    const password = document.getElementById("password");
+    const rat = document.getElementById("rat");
+
+    if (password.type === "password") {
+        password.type = "text";
+        rat.innerHTML = `<i class="fa-solid fa-eye"></i>`;
+    } else {
+        password.type = "password";
+        rat.innerHTML = `<i class="fa-solid fa-eye-slash"></i>`;
+    }
+}
+
+function login(event) {
+    event.preventDefault();
+    
+    const lemail = document.getElementById("email").value;
+    const lpassword = document.getElementById("password").value;
+    
+    const getUser = JSON.parse(localStorage.getItem("Users")) || [];
+    
+    const found = getUser.find(user => user.email === lemail && user.password === lpassword)
+      if(found) {
+        localStorage.setItem("regUser", JSON.stringify(found)); 
+        document.getElementById("custom-alert").style.display = "block";
+       setInterval(() => {
+         window.location.href = "index.html"
+       }, 2000);
+    } else {
+        alert("User not found or incorrect password");
+    }
+    
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   //  function bat() {
+   //    if (password.type == "password") {
+   //       password.type = "text"
+   //       rat.innerHTML = `<i class="fa-solid fa-eye"></i>`
+   //    } else {
+   //       password.type = "password"
+   //       rat.innerHTML = `<i class="fa-solid fa-eye-slash"></i>`
+   //    }
+   // }
+      
+   //    let lemail = document.getElementById("email").value
+   //    let lpassword = document.getElementById("password").value
+   //    let rat = document.getElementById("rat")
+
+   // function login(ev) {
+   //    ev.preventDefault();
+   //    let users = JSON.parse(localStorage.getItem('users')) || []
+   //    let found = users.find(el=> el.email === lemail && el.password === lpassword)
+   //    console.log(found) 
+   //    if(found == undefined) {
+   //       alert("user not found")
+   //    }else{
+   //       localStorage.setItem("regUser", JSON.stringify(found))
+   //      alert("login sucessful")
+
+   //    }
+
+   // }
+
+
+
+
+
+
+</script>

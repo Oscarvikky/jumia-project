@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5f80576e58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+ <style>
+    @media only screen and (max-width:820px){
+      .oj{
+        display: none;
+      } 
+      #product-details{
+        width: 400px;
+        margin: auto;
+      }
+      .lol{
+        display: none;
+      } 
+      #calm{
+        display: none;
+      }
+      .div{
+        width: 10%;
+      }
+      .nav{
+        width: 100%;
+      }
+      .navv{
+        width: 50%;
+      }
+    }
+    .nav2{
+        width: 100%;
+    }
+    .bbb{
+        width: 100%;
+    }
+    .b{
+        width: 30%;
+    }
+ </style>
+<body>
+    
+    <div class="nav">
+        <img class="navv" src="https://ng.jumia.is/cms/0-1-weekly-cps/0-2023/01-Jumia-cover-you/Jumia-cover-you.gif" alt="">
+   </div>
+   <div class="nav2">
+     <div class="na">
+       <img src="jumia-removebg-preview.png" alt=""><span><a href="seller.html">sell on jumia</p></a></span>
+     </div>
+     
+      <div class="d-flex justify-content-evenly w-25">
+
+         <p>Jumia</p>
+         <p>Pay</p>
+         <p>Food</p>
+         <p>Logistic</p>
+      </div>
+   </div>
+    <br>
+    <div class="bbb">
+   <div class="d-flex align-item-center net">
+    <button onclick="home()" id="home"><i class="fa-solid fa-house"></i></button>
+     <img class="lol" src="jumai logo.png" alt="">
+   <div class="div"> <i class="fa-solid fa-magnifying-glass"></i> <input type="text" name="" id="" class="b" placeholder="Search product, brands and categories"></div>
+     <button class="a">SEARCH</button>
+     <div id="disb" class="cc">
+         <button class="c"><i class="fa-solid fa-user"></i> Account <i class="fa-solid fa-angle-down"></i></button>
+         <div class="cont1">
+             <button class="sb" onclick="signIn()">SIGNIN</button>
+             <hr>
+             <p><i class="fa-solid fa-user"></i>  <a class="f" href="">My Account</a></p>
+             <p><i class="fa-solid fa-gift"></i>  Orders</p>
+             <p><i class="fa-regular fa-heart"></i> Saved Item</p>
+
+         </div>
+     </div>
+     <div id="dis" class="cc" >
+       <button class="c"><i class="fa-solid fa-user-check"></i></i> <span id="span"></span> <i class="fa-solid fa-angle-down"></i></button>
+       <div class="cont1">
+          
+           <hr>
+           <p><i class="fa-solid fa-user-check"></i> <a class="f" href="">My Account</a></p>
+           <p><i class="fa-solid fa-gift"></i>  Orders</p>
+           <p><i class="fa-regular fa-heart"></i> Saved Item</p>
+           <button class="sb" onclick="logOut()">LOGOUT</button>
+       </div>
+   </div>
+   
+     
+
+    <div class="cb">
+     <button class="d"><i class="fa-regular fa-circle-question"></i> Help <i class="fa-solid fa-angle-down"></i></button>
+     <div class="cont2">
+       <p>Help Center</p>
+       <p>Place an order</p>
+       <p>Payment option</p>
+       <p>Track an oder </p>
+       <p>Cancel an oder</p>
+       <p>Return and Refunds</p>
+       <hr>
+       <button class="cnt"><i class="fa-regular fa-comment-dots"></i> LIVE CHAT</button>
+     </div>
+    </div>
+     <button onclick="cartclick()" class="e"><i class="fa-solid fa-cart-shopping"></i> Cart <p class="ed" id="calm">0</p></button>
+   </div>
+ </div>
+   
+    
+    
+    <!-- <div class="cc">
+        Your header content here 
+    </div>  -->
+        <br><br>
+    <h1 class="pd"> Product Details</h1><br><br>
+    <div class="nt">
+    <div id="product-details">
+        <div id="product-detailss">
+            <!-- Product details will be inserted here dynamically -->
+        </div>
+        <label id="ds" for="quantity">Quantity</label>
+        <div id="dsx">
+            <button id="ddc" class="xz" onclick="decrease()">-</button>
+            <input type="number" id="quantity" value="1" min="1" max="10">
+            <button class="xz" onclick="increase()">+</button>
+        </div><br>
+        <button id="cvc" class="btn btn-primary w-75" onclick="addCart()">Add To Cart</button>
+    </div>
+      <div>
+        <img class="w-75 oj" src="pageoff.png" alt="">
+      </div>
+
+      </div>
+    <script>
+        // Initialize your product and cart
+        let product = JSON.parse(localStorage.getItem("selectedProduct")) || {};
+        let quantityInput = document.getElementById("quantity");
+        let productDetails = document.getElementById("product-detailss");
+        let calm = document.getElementById("calm")
+        let count = 1;
+        let cvc =document.getElementById("cvc")
+        let ddc = document.getElementById("ddc")
+        let dsx = document.getElementById("dsx")
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        dsx.style.display ="none"
+        
+        ds.style.display ="none"
+        
+
+        function showProductDetails() {
+            if (product) {
+                productDetails.innerHTML = `
+                    <div>
+                        <h3>${product.title}</h3>
+                        <img src="${product.thumbnail}" alt="" width="180px" height="150px">
+                        <p>&#8358 ${product.price}</p>
+                    </div>
+                `;
+            }
+        }
+        showProductDetails();
+
+        function addCart() {
+            if (product) {
+                // Create a cart item
+                let cartItem = {
+                    ...product,
+                    quantity: parseInt(quantityInput.value) || 1
+                    
+                };
+                
+                // calm.textContent = count
+                cvc.style.display= "none"
+                dsx.style.display ="block"
+        
+                ds.style.display ="block"
+
+
+
+                // Check if the item already exists in the cart
+                const existingItem = cart.find(item => item.id === product.id);
+                if (existingItem) {
+                    existingItem.quantity += cartItem.quantity;
+                } else {
+                    cart.push(cartItem);
+                }
+
+                // Update the cart in local storage
+                localStorage.setItem("cart", JSON.stringify(cart));
+
+                // Reset quantity input
+                quantityInput.value = 1;
+
+                alert("Product added to the cart successfully");
+            }
+            updateCartCount()
+        }
+
+        function increase() {
+            
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            // ddc.setAttribute("disabled", false)
+            alert("product added sucessfully")
+            // count++
+            // calm.textContent= count;
+            updateCartCount()
+            
+        }
+         
+        function decrease() {
+            if (quantityInput.value > 1) {
+                quantityInput.value = parseInt(quantityInput.value) -1;
+               
+               
+            }else if(quantityInput.value == 1){
+                ddc.setAttribute("disabled", true)
+                ddc.style.background = "red"
+            }
+        
+            alert("product removed successfully")
+            // count--
+            // calm.textContent= count;
+            // calm.style.right = "310px"
+            updateCartCount()
+        }
+
+        function cartclick(){
+            window.location.href ="cart.html"
+        }
+
+        function home(){
+            window.location.href = "index.html"
+        }
+        let dis = document.getElementById("dis")
+  let disb = document.getElementById("disb")
+//   let calm = document.getElementById("calm")
+  const getUser = JSON.parse(localStorage.getItem("regUser")) || [];
+        if(getUser.email){
+            dis.style.display="block"
+            disb.style.display="none"
+            calm.style.right = "320px"
+
+
+        }
+        let span = document.getElementById("span")
+        span.innerHTML = `${getUser.email}`
+
+        function logOut(){
+          localStorage.removeItem("regUser")
+          window.location.href = "index.html"
+        }
+        function signIn(){
+          window.location.href = "login.html"
+        }
+
+
+
+        function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    let calm = document.getElementById("calm");
+    calm.textContent = totalQuantity;
+}
+
+updateCartCount();
+    </script>
+</body>
+
+</html>
